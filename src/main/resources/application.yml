@@ -1,4 +1,6 @@
 spring:
+  jackson:
+    default-property-inclusion: non_null
   datasource:
     url: jdbc:postgresql://localhost:5432/city_guide
     username: postgres
@@ -22,3 +24,9 @@ spring:
           sharedCache:
             # enable selective caching mode - only entities with @Cacheable annotation will use L2 cache
             mode: ENABLE_SELECTIVE
+
+# App properties
+city-guide:
+    security:
+      jwt-secret: 6jiXqVnCaCTmXhZmuZ7k
+      jwt-expiration-ms: 86400000
