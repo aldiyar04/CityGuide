@@ -1,13 +1,12 @@
 package kz.edu.iitu.CityGuide.repository.entity;
 
+import kz.edu.iitu.CityGuide.feature.validation.place.*;
 import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Builder
@@ -24,11 +23,10 @@ import java.util.List;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Place extends BaseEntity {
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Place name cannot be blank")
-    @Size(min = 3, max = 64, message = "Place name must be 3-64 characters long")
+    @CheckPlaceName
     private String name;
 
-    @Size(min = 64, max = 4096, message = "Place description must be 64-4096 characters long")
+    @CheckPlaceDescription
     private String description;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -37,11 +35,11 @@ public class Place extends BaseEntity {
     private Address address;
 
     @Column(name = "phone", unique = true)
-    @Size(min = 14, max = 14, message = "Phone number must be exactly 14 characters long. Format: 7-707-123-4567.")
+    @CheckPhoneNumber
     private String phoneNumber;
 
     @Column(name = "website_url", unique = true)
-    @Size(min = 3, max = 2048, message = "Website URL must be 3-2048 characters long")
+    @CheckWebsiteUrl
     private String websiteUrl;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -50,5 +48,7 @@ public class Place extends BaseEntity {
             joinColumns = @JoinColumn(name = "place_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
+    @NotNull(message = "Place tag list cannot be null")
+    @CheckPlaceTags
     private List<Tag> tags;
 }

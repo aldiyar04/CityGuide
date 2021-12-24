@@ -1,5 +1,6 @@
 package kz.edu.iitu.CityGuide.repository.entity;
 
+import kz.edu.iitu.CityGuide.feature.validation.CheckRatingValue;
 import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -33,8 +34,6 @@ public class Rating extends BaseEntity {
     @NotNull(message = "Rating's user cannot be null")
     private User user;
 
-    @NotNull(message = "Rating value cannot be null")
-    @DecimalMin(value = "1", message = "Rating value must be at least 1")
-    @DecimalMax(value = "5", message = "Rating value must be at most 5")
+    @CheckRatingValue
     private BigDecimal value;
 }

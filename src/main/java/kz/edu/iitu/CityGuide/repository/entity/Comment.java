@@ -1,5 +1,6 @@
 package kz.edu.iitu.CityGuide.repository.entity;
 
+import kz.edu.iitu.CityGuide.feature.validation.CheckCommentBody;
 import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -29,8 +30,7 @@ public class Comment extends BaseEntity {
     @NotNull(message = "Comment's rating cannot be null")
     private Rating rating;
 
-    @NotBlank(message = "Comment body cannot be blank")
-    @Size(min = 4, max = 2048, message = "Comment body must be 4-2048 characters long")
+    @CheckCommentBody
     private String body;
 
     @Column(columnDefinition = "timestamp", name = "created_at",

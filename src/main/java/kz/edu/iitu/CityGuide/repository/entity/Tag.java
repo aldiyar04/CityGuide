@@ -1,13 +1,12 @@
 package kz.edu.iitu.CityGuide.repository.entity;
 
+import kz.edu.iitu.CityGuide.feature.validation.CheckTagName;
 import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Builder
@@ -24,8 +23,7 @@ import java.util.List;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Tag extends BaseEntity {
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Tag name cannot be blank")
-    @Size(min = 2, max = 64, message = "Tag name must be 2-64 characters long")
+    @CheckTagName
     private String name;
 
     @Column(name = "lft")
