@@ -4,7 +4,7 @@ import kz.edu.iitu.CityGuide.controller.dto.request.UserLoginDto;
 import kz.edu.iitu.CityGuide.controller.dto.request.UserSignupDto;
 import kz.edu.iitu.CityGuide.controller.dto.request.UserUpdateDto;
 import kz.edu.iitu.CityGuide.controller.dto.response.JwtDto;
-import kz.edu.iitu.CityGuide.controller.dto.UserDto;
+import kz.edu.iitu.CityGuide.controller.dto.response.UserDto;
 import kz.edu.iitu.CityGuide.feature.exception.RecordAlreadyExistsException;
 import kz.edu.iitu.CityGuide.feature.exception.RecordNotFoundException;
 import kz.edu.iitu.CityGuide.feature.security.jwt.JwtUtil;

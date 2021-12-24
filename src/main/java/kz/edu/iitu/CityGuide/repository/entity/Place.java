@@ -29,7 +29,7 @@ public class Place extends BaseEntity {
     @CheckPlaceDescription
     private String description;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id", unique = true)
     @NotNull(message = "Place address cannot be null")
     private Address address;
@@ -42,7 +42,7 @@ public class Place extends BaseEntity {
     @CheckWebsiteUrl
     private String websiteUrl;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "place_tags",
             joinColumns = @JoinColumn(name = "place_id"),
@@ -51,4 +51,7 @@ public class Place extends BaseEntity {
     @NotNull(message = "Place tag list cannot be null")
     @CheckPlaceTags
     private List<Tag> tags;
+
+    @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
+    private List<Rating> ratings;
 }

@@ -1,6 +1,7 @@
-package kz.edu.iitu.CityGuide.controller.dto;
+package kz.edu.iitu.CityGuide.controller.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import kz.edu.iitu.CityGuide.controller.dto.BaseUserDto;
 import kz.edu.iitu.CityGuide.feature.validation.user.CheckUserRole;
 import kz.edu.iitu.CityGuide.repository.entity.User;
 import lombok.Getter;

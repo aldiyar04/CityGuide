@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @NotBlank(message = "Building number cannot be blank")
-@Size(min = 1, max = 4, message = "Building number must be 1-4 characters long")
+@Size(min = 1, max = 8, message = "Building number must be 1-8 characters long")
 @Constraint(validatedBy = {})
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

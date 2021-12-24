@@ -8,7 +8,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -28,8 +27,4 @@ public class Address extends BaseEntity {
     @Column(nullable = false)
     @CheckBuildingNumber
     private String buildingNumber;
-
-//    @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
-//    @NotNull(message = "Address' place cannot be null")
-//    private Place place;
 }

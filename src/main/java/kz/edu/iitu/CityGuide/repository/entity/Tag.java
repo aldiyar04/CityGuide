@@ -9,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -36,4 +35,10 @@ public class Tag extends BaseEntity {
 
     @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
     private List<Place> places;
+
+    public Tag(String name, int left, int right) {
+        this.name = name;
+        this.left = left;
+        this.right = right;
+    }
 }

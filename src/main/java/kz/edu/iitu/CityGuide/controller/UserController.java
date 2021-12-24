@@ -5,7 +5,7 @@ import kz.edu.iitu.CityGuide.controller.dto.request.UserLoginDto;
 import kz.edu.iitu.CityGuide.controller.dto.request.UserSignupDto;
 import kz.edu.iitu.CityGuide.controller.dto.request.UserUpdateDto;
 import kz.edu.iitu.CityGuide.controller.dto.response.JwtDto;
-import kz.edu.iitu.CityGuide.controller.dto.UserDto;
+import kz.edu.iitu.CityGuide.controller.dto.response.UserDto;
 import kz.edu.iitu.CityGuide.repository.entity.User;
 import kz.edu.iitu.CityGuide.service.UserService;
 import lombok.AllArgsConstructor;

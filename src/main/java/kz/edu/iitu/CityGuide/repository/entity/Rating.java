@@ -34,6 +34,7 @@ public class Rating extends BaseEntity {
     @NotNull(message = "Rating's user cannot be null")
     private User user;
 
+    @NotNull(message = "Rating value cannot be null")
     @CheckRatingValue
     private BigDecimal value;
 }

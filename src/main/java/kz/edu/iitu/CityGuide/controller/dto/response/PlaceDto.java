@@ -1,15 +1,14 @@
-package kz.edu.iitu.CityGuide.controller.dto;
+package kz.edu.iitu.CityGuide.controller.dto.response;
 
-import kz.edu.iitu.CityGuide.feature.validation.*;
+import kz.edu.iitu.CityGuide.feature.validation.CheckRatingValue;
 import kz.edu.iitu.CityGuide.feature.validation.place.*;
+import kz.edu.iitu.CityGuide.repository.entity.Comment;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Builder
 @AllArgsConstructor
 @Getter
 public class PlaceDto {
@@ -36,4 +35,6 @@ public class PlaceDto {
 
     @CheckRatingValue
     private final BigDecimal averageRating;
+
+    private final List<Comment> comments;
 }
