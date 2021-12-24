@@ -7,7 +7,6 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -20,13 +19,10 @@ public class UserDto extends BaseUserDto {
     @JsonFormat(pattern = "dd.MM.yyyy")
     private final LocalDate createdOn;
 
-    private final BigDecimal bigDecimal;
-
-    private UserDto(String email, String username, String role, LocalDate createdOn, BigDecimal bigDecimal) {
+    private UserDto(String email, String username, String role, LocalDate createdOn) {
         super(email, username);
         this.role = role;
         this.createdOn = createdOn;
-        this.bigDecimal = bigDecimal;
     }
 
     public static UserDto build(User user) {
@@ -34,8 +30,7 @@ public class UserDto extends BaseUserDto {
                 user.getEmail(),
                 user.getUsername(),
                 user.getRole(),
-                user.getCreatedOn(),
-                user.getBigDecimal()
+                user.getCreatedOn()
         );
     }
 
@@ -46,7 +41,6 @@ public class UserDto extends BaseUserDto {
                 ", username=" + getUsername() +
                 ", role='" + role + '\'' +
                 ", createdOn=" + createdOn +
-                ", bigDecimal=" + bigDecimal +
                 '}';
     }
 }

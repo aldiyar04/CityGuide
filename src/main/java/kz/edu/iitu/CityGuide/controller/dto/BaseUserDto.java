@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Getter
 public abstract class BaseUserDto {
     @NotBlank(message = "Email cannot be blank")
-    @Size(max = 64, message = "Email cannot be longer than 64 characters")
+    @Size(max = 64, message = "Email must be at most 64 characters")
     @Email(message = "Email must be valid")
     private final String email;
 

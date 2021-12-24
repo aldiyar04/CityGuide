@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,7 +69,6 @@ public class UserController {
                 .email(userSignupDto.getEmail())
                 .username(userSignupDto.getUsername())
                 .password("yJHlPgnRusZrqpXIVQrsugzw8LKT70mLFUa2ReIa6pcSOKBf5poxgCFRDJp1")
-                .bigDecimal(new BigDecimal("4.543256395435"))
                 .build();
         User savedUser = userRepository.save(user);
         UserDto userDto = UserDto.build(savedUser);

@@ -5,9 +5,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Builder
@@ -33,7 +33,8 @@ public class User extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     @NotBlank(message = "Email cannot be blank")
-    @Size(max = 64, message = "Email cannot be longer than 64 characters")
+    @Size(max = 64, message = "Email must be at most 64 characters")
+    @Email
     private String email;
 
     @Column(nullable = false, unique = true)
@@ -46,11 +47,9 @@ public class User extends BaseEntity {
     @Size(message = "Password hash must be exactly 60 characters long")
     private String password;
 
-    @Column(columnDefinition = "date default current_date", nullable = false, insertable = false, updatable = false)
+    @Column(columnDefinition = "date default current_date", name = "created_on",
+            nullable = false, insertable = false, updatable = false)
     private LocalDate createdOn;
-
-    @Column(nullable = false)
-    private BigDecimal bigDecimal;
 
     @PrePersist
     public void setCreatedOn() {

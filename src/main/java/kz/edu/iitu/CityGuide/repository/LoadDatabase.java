@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.math.BigDecimal;
-
 @Configuration
 @Log4j2
 class LoadDatabase {
@@ -28,7 +26,6 @@ class LoadDatabase {
                     .email("admin@test.com")
                     .username("gokublack")
                     .password(passwordEncoder.encode("password"))
-                    .bigDecimal(new BigDecimal("10.3298573589"))
                     .build();
             log.info("Preloading " + repository.save(admin));
         };
