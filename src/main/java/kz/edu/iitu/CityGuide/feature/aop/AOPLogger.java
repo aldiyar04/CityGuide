@@ -1,31 +1,31 @@
 package kz.edu.iitu.CityGuide.feature.aop;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.CodeSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Aspect
 @Component
 @Log4j2
+@AllArgsConstructor
+@ControllerAdvice
 public class AOPLogger {
     private static final String POINTCUT = "within(kz.edu.iitu.CityGuide.controller.*)";
 
     private HttpServletRequest request;
 
-    @Autowired
-    public void setRequest(HttpServletRequest request) {
-        this.request = request;
-    }
-
     @Before(POINTCUT)
-    public void logIncomingInformation(JoinPoint joinPoint) {
+    public void logIncomingInfo(JoinPoint joinPoint) {
         System.out.println("\nINCOMING INFO");
         log.info("Request URL: " + request.getRequestURL());
         log.info("HTTP method: " + request.getMethod());
@@ -34,7 +34,11 @@ public class AOPLogger {
             log.info("Arguments: [" + getMethodArguments(joinPoint) + "]");
         }
         log.info("Client IP: " + request.getRemoteAddr());
-        System.out.println();
+    }
+
+    @AfterThrowing(pointcut = POINTCUT, throwing = "ex")
+    public void logIncomingInfoAndException(JoinPoint joinPoint, Throwable ex) {
+        log.info(ex.getClass().getSimpleName() + ": " + ex.getMessage());
     }
 
     private String getClassAndMethod(JoinPoint joinPoint) {

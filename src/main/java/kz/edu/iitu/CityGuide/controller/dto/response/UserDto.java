@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Getter
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto extends BaseUserDto {
     @NotBlank(message = "User role cannot be blank")
     @Size(min = 4, max = 32, message = "User role must be 4-32 characters long")

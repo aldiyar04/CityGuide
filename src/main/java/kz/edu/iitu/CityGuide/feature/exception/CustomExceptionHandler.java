@@ -27,7 +27,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({RecordNotFoundException.class, RecordAlreadyExistsException.class})
-    public final ResponseEntity<Object> handleUserNotFoundException(ApiException ex, WebRequest request) {
+    public final ResponseEntity<Object> handleApiExceptions(ApiException ex, WebRequest request) {
         HttpStatus httpStatus;
         String message;
         if (ex instanceof RecordNotFoundException) {

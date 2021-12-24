@@ -10,7 +10,8 @@ import kz.edu.iitu.CityGuide.feature.security.jwt.JwtUtil;
 import kz.edu.iitu.CityGuide.feature.security.service.UserDetailsImpl;
 import kz.edu.iitu.CityGuide.repository.UserRepository;
 import kz.edu.iitu.CityGuide.repository.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import kz.edu.iitu.CityGuide.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,51 +28,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/users")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@AllArgsConstructor
 public class UserController {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    @Autowired
-    public UserController(UserRepository userRepository, AuthenticationManager authenticationManager,
-                          PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
-        this.userRepository = userRepository;
-        this.authenticationManager = authenticationManager;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
-    }
+    private final UserService userService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("User with id " + id + " does not exist"));
-        UserDto userDto = UserDto.build(user);
+        UserDto userDto = userService.getUserById(id);
         return ResponseEntity.ok().body(userDto);
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserSignupDto userSignupDto) {
-        boolean isUsernameTaken = userRepository.existsByUsername(userSignupDto.getUsername());
-        boolean isEmailTaken = userRepository.existsByEmail(userSignupDto.getEmail());
-        if (isUsernameTaken && isEmailTaken) {
-            throw new RecordAlreadyExistsException("Username " + userSignupDto.getUsername() + " is already taken. " +
-                    "Email " + userSignupDto.getEmail() + " is already taken.");
-        } else if (isUsernameTaken) {
-            throw new RecordAlreadyExistsException("Username " + userSignupDto.getUsername() + " is already taken");
-        } else if (isEmailTaken) {
-            throw new RecordAlreadyExistsException("Email " + userSignupDto.getEmail() + " is already taken");
-        }
-        User user = User.builder()
-                .role(User.ROLE_USER)
-                .email(userSignupDto.getEmail())
-                .username(userSignupDto.getUsername())
-                .password("yJHlPgnRusZrqpXIVQrsugzw8LKT70mLFUa2ReIa6pcSOKBf5poxgCFRDJp1")
-                .build();
-        User savedUser = userRepository.save(user);
-        UserDto userDto = UserDto.build(savedUser);
+    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserSignupDto signupDto) {
+        UserDto userDto = userService.registerUser(signupDto);
         return ResponseEntity.ok().body(userDto);
     }
 

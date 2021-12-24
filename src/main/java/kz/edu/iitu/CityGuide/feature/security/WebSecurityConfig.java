@@ -4,7 +4,7 @@ package kz.edu.iitu.CityGuide.feature.security;
 import kz.edu.iitu.CityGuide.feature.security.jwt.AuthEntryPointJwt;
 import kz.edu.iitu.CityGuide.feature.security.jwt.AuthTokenFilter;
 import kz.edu.iitu.CityGuide.feature.security.service.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,15 +21,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true, prePostEnabled = true)
+@AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthEntryPointJwt unauthorizedHandler;
-
-    @Autowired
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, AuthEntryPointJwt unauthorizedHandler) {
-        this.userDetailsService = userDetailsService;
-        this.unauthorizedHandler = unauthorizedHandler;
-    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
