@@ -1,7 +1,9 @@
 package kz.edu.iitu.CityGuide.controller;
 
+import kz.edu.iitu.CityGuide.CityGuideApplication;
 import kz.edu.iitu.CityGuide.controller.dto.request.UserLoginDto;
 import kz.edu.iitu.CityGuide.controller.dto.request.UserSignupDto;
+import kz.edu.iitu.CityGuide.controller.dto.request.UserUpdateDto;
 import kz.edu.iitu.CityGuide.controller.dto.response.JwtDto;
 import kz.edu.iitu.CityGuide.controller.dto.UserDto;
 import kz.edu.iitu.CityGuide.repository.entity.User;
@@ -16,10 +18,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
-@AllArgsConstructor
+@RequestMapping(CityGuideApplication.API_URI_PATH + "/users")
 @RolesAllowed(User.ROLE_ADMIN)
+@AllArgsConstructor
 public class UserController {
     private final UserService userService;
 
@@ -51,10 +52,9 @@ public class UserController {
 
     @PutMapping(value = "/{id}")
     @RolesAllowed(User.ROLE_ADMIN)
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") long id, @Valid @RequestBody UserDto newUserDto) {
-        // newUserDto.createdOn must not be specified in the request. Any way, it is ignored.
-        // updatedUserDto is the same as newUserDto but with the "createdOn" field defined.
-        UserDto updatedUserDto = userService.updateUser(id, newUserDto);
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") long id,
+                                              @Valid @RequestBody UserUpdateDto userUpdateDto) {
+        UserDto updatedUserDto = userService.updateUser(id, userUpdateDto);
         return ResponseEntity.ok().body(updatedUserDto);
     }
 

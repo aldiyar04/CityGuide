@@ -2,6 +2,7 @@ package kz.edu.iitu.CityGuide.service;
 
 import kz.edu.iitu.CityGuide.controller.dto.request.UserLoginDto;
 import kz.edu.iitu.CityGuide.controller.dto.request.UserSignupDto;
+import kz.edu.iitu.CityGuide.controller.dto.request.UserUpdateDto;
 import kz.edu.iitu.CityGuide.controller.dto.response.JwtDto;
 import kz.edu.iitu.CityGuide.controller.dto.UserDto;
 import kz.edu.iitu.CityGuide.feature.exception.RecordAlreadyExistsException;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,32 +67,29 @@ public class UserService {
     }
 
     public UserDto getUserById(long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("User with id " + id + " does not exist"));
+        User user = getByIdOrThrowNotFoundException(id);
         return UserDto.build(user);
     }
 
-    public UserDto updateUser(long id, UserDto newUserDto) {
-        User oldUser = userRepository.findById(id)
-                .orElseThrow(() -> {
-                    throw new RecordNotFoundException("User with id " + id + " does not exist");
-                });
+    public UserDto updateUser(long id, UserUpdateDto userUpdateDto) {
+        User oldUser = getByIdOrThrowNotFoundException(id);
 
-        oldUser.setRole(newUserDto.getRole());
-        oldUser.setEmail(newUserDto.getEmail());
-        oldUser.setUsername(newUserDto.getUsername());
+        String newEmail = userUpdateDto.getEmail();
+        String newUsername = userUpdateDto.getUsername();
 
-        // Not simply returning updated oldUser in case if in the future User or UserDto classes will be updated,
-        // e.g., by adding a new updatedOn field. Then savedUser will be different from oldUser.
+        if (StringUtils.hasText(newEmail)) {
+            oldUser.setEmail(newEmail);
+        }
+        if (StringUtils.hasText(newUsername)) {
+            oldUser.setUsername(userUpdateDto.getUsername());
+        }
+
         User savedUser = userRepository.save(oldUser);
         return UserDto.build(savedUser);
     }
 
     public void deleteUser(long id) {
-        boolean exists = userRepository.existsById(id);
-        if (!exists) {
-            throw new RecordNotFoundException("User with id " + id + " does not exist");
-        }
+        getByIdOrThrowNotFoundException(id);
         userRepository.deleteById(id);
     }
 
@@ -106,5 +105,12 @@ public class UserService {
         } else if (isEmailTaken) {
             throw new RecordAlreadyExistsException("Email " + signupDto.getEmail() + " is already taken");
         }
+    }
+
+    private User getByIdOrThrowNotFoundException(long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> {
+                    throw new RecordNotFoundException("User with id " + id + " does not exist");
+                });
     }
 }

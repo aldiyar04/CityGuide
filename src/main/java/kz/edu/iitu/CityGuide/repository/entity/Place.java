@@ -37,7 +37,7 @@ public class Place extends BaseEntity {
     private Address address;
 
     @Column(name = "phone", unique = true)
-    @Size(min = 14, max = 14, message = "Phone number must be exactly 14 characters length. Format: 7-707-123-4567.")
+    @Size(min = 14, max = 14, message = "Phone number must be exactly 14 characters long. Format: 7-707-123-4567.")
     private String phoneNumber;
 
     @Column(name = "website_url", unique = true)
