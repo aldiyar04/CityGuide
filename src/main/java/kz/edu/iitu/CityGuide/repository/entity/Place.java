@@ -36,15 +36,15 @@ public class Place extends BaseEntity {
     @NotNull(message = "Place address cannot be null")
     private Address address;
 
-    @Column(unique = true)
+    @Column(name = "phone", unique = true)
     @Size(min = 14, max = 14, message = "Phone number must be exactly 14 characters length. Format: 7-707-123-4567.")
     private String phoneNumber;
 
-    @Column(unique = true)
+    @Column(name = "website_url", unique = true)
     @Size(min = 3, max = 2048, message = "Website URL must be 3-2048 characters long")
     private String websiteUrl;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "place_tags",
             joinColumns = @JoinColumn(name = "place_id"),

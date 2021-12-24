@@ -36,6 +36,6 @@ public class Tag extends BaseEntity {
     @NotNull(message = "Tag.right cannot be null")
     private Integer right;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
     private List<Place> places;
 }

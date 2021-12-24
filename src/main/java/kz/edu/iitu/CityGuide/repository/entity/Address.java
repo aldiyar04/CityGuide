@@ -33,7 +33,7 @@ public class Address extends BaseEntity {
     @Size(min = 1, max = 4, message = "Building number must be 1-4 characters long")
     private String building;
 
-    @OneToOne(mappedBy = "address")
-    @NotNull(message = "Address' place cannot be null")
-    private Place place;
+//    @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
+//    @NotNull(message = "Address' place cannot be null")
+//    private Place place;
 }
