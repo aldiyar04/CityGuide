@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class UserDetailsImpl implements UserDetails {
@@ -40,6 +41,12 @@ public class UserDetailsImpl implements UserDetails {
                 user.getPassword(),
                 authorities
         );
+    }
+
+    public List<String> getRoles() {
+        return this.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
     }
 
     @Override

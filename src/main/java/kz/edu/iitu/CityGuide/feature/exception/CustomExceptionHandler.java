@@ -1,5 +1,6 @@
 package kz.edu.iitu.CityGuide.feature.exception;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,18 +27,22 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler({RecordNotFoundException.class, RecordAlreadyExistsException.class})
-    public final ResponseEntity<Object> handleApiExceptions(ApiException ex, WebRequest request) {
+    @ExceptionHandler({ApiException.class, AccessDeniedException.class})
+    public final ResponseEntity<Object> handleApiExceptions(Exception ex, WebRequest request) {
         HttpStatus httpStatus;
         String message;
+        List<String> details = new ArrayList<>();
         if (ex instanceof RecordNotFoundException) {
             httpStatus = HttpStatus.NOT_FOUND;
             message = "Record Not Found";
-        } else {
+        } else if (ex instanceof RecordAlreadyExistsException) {
             httpStatus = HttpStatus.BAD_REQUEST;
             message = "Record Already Exists";
+        } else {
+            httpStatus = HttpStatus.FORBIDDEN;
+            message = "Access Denied";
+            details.add("You don't have the role (USER / ADMIN) required to access this resource");
         }
-        List<String> details = new ArrayList<>();
         details.add(ex.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse(message, details);
         return new ResponseEntity(error, httpStatus);

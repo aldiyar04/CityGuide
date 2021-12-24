@@ -16,7 +16,7 @@ import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "addresses")
-@SequenceGenerator(name = "generator", sequenceName = "address_sequence", allocationSize = 1)
+@SequenceGenerator(name = "address_id_generator", sequenceName = "address_sequence", allocationSize = 1)
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Address extends BaseEntity {

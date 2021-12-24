@@ -2,7 +2,7 @@ package kz.edu.iitu.CityGuide.controller.dto.response;
 
 import java.util.List;
 
-public class JwtResponse {
+public class JwtDto {
     private String token;
     private String type = "Bearer";
     private Long id;
@@ -10,7 +10,7 @@ public class JwtResponse {
     private String email;
     private List<String> roles;
 
-    public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles) {
+    public JwtDto(String accessToken, Long id, String username, String email, List<String> roles) {
         this.token = accessToken;
         this.id = id;
         this.username = username;

@@ -3,7 +3,6 @@ package kz.edu.iitu.CityGuide.feature.aop;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

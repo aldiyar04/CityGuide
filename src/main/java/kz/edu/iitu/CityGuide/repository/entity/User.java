@@ -1,5 +1,6 @@
 package kz.edu.iitu.CityGuide.repository.entity;
 
+import kz.edu.iitu.CityGuide.controller.dto.UserDto;
 import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -19,7 +20,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
-@SequenceGenerator(name = "generator", sequenceName = "user_sequence", allocationSize = 1)
+@SequenceGenerator(name = "user_id_generator", sequenceName = "user_sequence", allocationSize = 1)
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends BaseEntity {
