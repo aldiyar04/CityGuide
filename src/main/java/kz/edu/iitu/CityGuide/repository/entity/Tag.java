@@ -17,7 +17,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tags")
-@SequenceGenerator(name = "tag_id_generator", sequenceName = "tag_sequence", allocationSize = 1)
+@SequenceGenerator(name = "generator", sequenceName = "tag_sequence", allocationSize = 1)
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Tag extends BaseEntity {

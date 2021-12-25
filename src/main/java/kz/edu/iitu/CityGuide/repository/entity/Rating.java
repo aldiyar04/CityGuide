@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ratings")
-@SequenceGenerator(name = "rating_id_generator", sequenceName = "rating_sequence", allocationSize = 1)
+@SequenceGenerator(name = "generator", sequenceName = "rating_sequence", allocationSize = 1)
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Rating extends BaseEntity {

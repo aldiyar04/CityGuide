@@ -139,7 +139,7 @@ class LoadDatabase {
                 businessTag, businessCenterTag);
         tags.forEach(tag -> log.info("Preloading " + tagRepository.save(tag)));
 
-        List<Place> places = Arrays.asList(place1, place2, place3, place4, place6, place7, place8);
+        List<Place> places = Arrays.asList(place1, place2, place3, place4, place5, place6, place7, place8);
         places.forEach(place -> log.info("Preloading " + placeRepository.save(place)));
     }
 }

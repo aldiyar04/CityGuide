@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "places")
-@SequenceGenerator(name = "place_id_generator", sequenceName = "place_sequence", allocationSize = 1)
+@SequenceGenerator(name = "generator", sequenceName = "place_sequence", allocationSize = 1)
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Place extends BaseEntity {

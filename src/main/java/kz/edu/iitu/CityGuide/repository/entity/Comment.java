@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
-@SequenceGenerator(name = "comment_id_generator", sequenceName = "comment_sequence", allocationSize = 1)
+@SequenceGenerator(name = "generator", sequenceName = "comment_sequence", allocationSize = 1)
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Comment extends BaseEntity {

@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    @Query("select c from Comment c inner join Rating r on c.rating = r inner join Place p on r.place = ?1")
+    @Query("select c from Comment c join Rating r on c.rating = r join Place p on r.place = ?1")
     List<Comment> findCommentsOfPlace(Place place);
 }

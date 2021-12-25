@@ -22,7 +22,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
-@SequenceGenerator(name = "user_id_generator", sequenceName = "user_sequence", allocationSize = 1)
+@SequenceGenerator(name = "generator", sequenceName = "user_sequence", allocationSize = 1)
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends BaseEntity {
