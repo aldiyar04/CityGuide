@@ -1,5 +1,6 @@
 package kz.edu.iitu.CityGuide.service;
 
+import kz.edu.iitu.CityGuide.CityGuideApplication;
 import kz.edu.iitu.CityGuide.controller.dto.request.UserLoginDto;
 import kz.edu.iitu.CityGuide.controller.dto.request.UserSignupDto;
 import kz.edu.iitu.CityGuide.controller.dto.request.UserUpdateDto;
@@ -7,11 +8,15 @@ import kz.edu.iitu.CityGuide.controller.dto.response.JwtDto;
 import kz.edu.iitu.CityGuide.controller.dto.response.UserDto;
 import kz.edu.iitu.CityGuide.feature.exception.RecordAlreadyExistsException;
 import kz.edu.iitu.CityGuide.feature.exception.RecordNotFoundException;
+import kz.edu.iitu.CityGuide.feature.jms.JmsConfig;
 import kz.edu.iitu.CityGuide.feature.security.jwt.JwtUtil;
 import kz.edu.iitu.CityGuide.feature.security.service.UserDetailsImpl;
 import kz.edu.iitu.CityGuide.repository.UserRepository;
 import kz.edu.iitu.CityGuide.repository.entity.User;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,6 +35,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final JmsTemplate jmsTemplate;
 
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream()
@@ -39,7 +45,7 @@ public class UserService {
 
     public UserDto registerUser(UserSignupDto signupDto) {
         checkIfUserAlreadyExists(signupDto);
-
+        sendEmailToJmsQueue(signupDto.getEmail());
         User user = User.builder()
                 .role(User.ROLE_USER)
                 .email(signupDto.getEmail())
@@ -91,6 +97,10 @@ public class UserService {
     public void deleteUser(long id) {
         getByIdOrThrowNotFoundException(id);
         userRepository.deleteById(id);
+    }
+
+    private void sendEmailToJmsQueue(String email) {
+        jmsTemplate.convertAndSend(CityGuideApplication.MESSAGE_QUEUE_NAME, email);
     }
 
     private void checkIfUserAlreadyExists(UserSignupDto signupDto) {
