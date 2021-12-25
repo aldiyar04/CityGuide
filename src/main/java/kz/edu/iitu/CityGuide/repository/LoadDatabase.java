@@ -38,7 +38,7 @@ class LoadDatabase {
         User admin = User.builder()
                 .role(User.ROLE_ADMIN)
                 .email("admin@test.com")
-                .username("gokublack")
+                .username("admin")
                 .password(passwordEncoder.encode("password"))
                 .build();
         List<User> users = Collections.singletonList(admin);
